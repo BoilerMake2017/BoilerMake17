@@ -22,15 +22,15 @@ class AddItem extends Component {
   handleSubmit(event) {
     event.preventDefault();
     this.addItemService.sendData(this.state.value);
-    this.props.history.push('/');
+    this.props.history.push('/index');
   }
 
   render() {
     return (
-      <div className= "container">
+      <div className="container">
         <form onSubmit={this.handleSubmit}>
         <label>
-          AddItem:
+          Add Item:
           <input type="text" value={this.state.value} onChange={this.handleChange} className="form-control"/>
           </label><br/>
 
