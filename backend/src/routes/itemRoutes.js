@@ -8,30 +8,29 @@ var itemRouter = express.Router();
 var Item = require('../models/Item');
 
 // Defined store route
-
-//itemRouter.('/add/post').post(function (req, res) {
-itemRouter.post('/add/post', function(req, res) {
+itemRouter.route('/add/post').post(function (req, res) {
   var item = new Item(req.body);
-      item.save()
+  item.save()
   .then(item => {
-    res.json('Item added successfully');
+    res.status(200).json({Item: 'Item added successfully'});
   })
   .catch(err => {
     res.status(400).send("unable to save to database");
   });
 });
 
-//Defined get data(index or listing) router
-//itemRouter.route('/').get(function (req, res) {
-itemRouter.get('/', function(req, res) {
+// Defined get data(index or listing) route
+itemRouter.route('/', function(req, res) {
   Item.find(function (err, itms) {
-    if(err) {
+    if (err) {
       console.log(err);
-    } else {
+    }
+    else {
       res.json(itms);
     }
   });
 });
+
 
 // Defined edit route
 itemRouter.route('/edit/:id').get(function (req, res) {
@@ -60,14 +59,17 @@ itemRouter.route('/update/:id').post(function (req, res) {
   });
 });
 
-// Defined delete, remove, destroy route
+// Defined delete| remove | destroy route
 itemRouter.route('/delete/:id').get(function (req, res) {
   Item.findByIdAndRemove({_id: req.params.id},
       function(err, item) {
-        if(err)
+        if(err){
           res.json(err);
-        else
+        }
+        else {
           res.json("Successfully removed");
+        }
+          
     });
 });
 
